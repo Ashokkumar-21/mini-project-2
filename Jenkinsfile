@@ -21,48 +21,53 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'AWS_CREDENTIALS',
                                           usernameVariable: 'AWS_ACCESS_KEY_ID',
                                           passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                    sh
+                    sh'''
                     echo '==> Identity check'
-                    'aws sts get-caller-identity'
+                    aws sts get-caller-identity
 
                     echo '==> Terraform Init'
-                    'terraform init -reconfigure'
+                    terraform init -reconfigure
 
                     echo '==> Terraform Apply'
-                    'terraform apply -auto-approve'
+                    terraform apply -auto-approve
+                    '''
                                           }
             }
         }
 
         stage('Configure kubectl for EKS') {
             steps {
-                sh
-                'aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID'
-                'aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY'
-                'aws configure set default.region $AWS_REGION'
-                'aws eks update-kubeconfig --name $CLUSTER'
+                sh''''
+                aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+                aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+                aws configure set default.region $AWS_REGION
+                aws eks update-kubeconfig --name $CLUSTER
+                ''''
             }
         }
 
         stage('Build Docker Image & Push') {
             steps {
                 script {
-                    sh
-                    'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    'docker build -t $DOCKER_IMAGE .'
-                    'docker tag $DOCKER_IMAGE $DOCKER_IMAGE'
-                    'docker push $DOCKER_IMAGE'
+                    sh''''
+                    echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                    docker build -t $DOCKER_IMAGE .
+                    docker tag $DOCKER_IMAGE $DOCKER_IMAGE
+                    docker push $DOCKER_IMAGE
+                    ''''
                 }
             }
         }
 
         stage('Deploy to EKS') {
             steps {
-                sh
-                'aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER'
-                'kubectl apply -f deployment.yaml'
-                'kubectl apply -f service.yaml'
+                sh'''
+                aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER
+                kubectl apply -f deployment.yaml
+                kubectl apply -f service.yaml
+                '''
             }
         }
     }
 }
+
