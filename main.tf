@@ -3,7 +3,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0"
+      version = "~> 6.0.0"
     }
   }
 }
@@ -50,4 +50,5 @@ module "eks" {
       instance_types = ["t3.medium"]
     }
   }
+
 }
