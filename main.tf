@@ -32,14 +32,15 @@ module "vpc" {
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   cluster_name    = var.cluster_name
-  cluster_version = "1.33"
+  cluster_version = "1.29"
   subnet_ids      = module.vpc.private_subnets
   vpc_id          = module.vpc.vpc_id
 
   authentication_mode = "API_AND_CONFIG_MAP"
 
   eks_managed_node_group_defaults = {
-    instance_types = ["t3.medium"]
+    ami_type  = "AL2_x86_64"
+    disk_size = 20
   }
 
   eks_managed_node_groups = {
@@ -52,3 +53,4 @@ module "eks" {
   }
 
 }
+
