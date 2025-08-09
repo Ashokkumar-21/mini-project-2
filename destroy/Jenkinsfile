@@ -12,7 +12,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'aws-credentials',
                                                   usernameVariable: 'AWS_ACCESS_KEY_ID',
                                                   passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                    dir("${env.WORKSPACE}/terraform") { 
+                    dir("${env.WORKSPACE}") { 
                         sh '''
                             echo ">> Destroying Terraform-managed resources"
                             terraform init -reconfigure
@@ -24,4 +24,5 @@ pipeline {
         }
     }
 }
+
 
