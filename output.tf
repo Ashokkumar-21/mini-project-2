@@ -10,6 +10,7 @@ output "cluster_endpoint" {
 
 output "kubeconfig" {
   description = "Kubeconfig for accessing the EKS cluster"
-  value       = "aws eks update-kubeconfig --region ${var.aws_region} --name ${module.eks.cluster_name}"
+  value       = "aws eks update-kubeconfig --region ${var.region} --name ${module.eks.cluster_name}"
 }
+
 
