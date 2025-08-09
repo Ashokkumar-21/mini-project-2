@@ -10,5 +10,6 @@ output "cluster_endpoint" {
 
 output "kubeconfig" {
   description = "Kubeconfig for accessing the EKS cluster"
-  value       = module.eks.cluster_certificate_authority_data
+  value       = "aws eks update-kubeconfig --region ${var.aws_region} --name ${module.eks.cluster_name}"
 }
+
