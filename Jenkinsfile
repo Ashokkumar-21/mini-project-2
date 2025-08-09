@@ -29,7 +29,7 @@ pipeline {
                     echo "==> Terraform Apply"
                     terraform apply -auto-approve
                     '''
-                }
+                                                  }
             }
         }
 
@@ -44,7 +44,7 @@ pipeline {
                     aws configure set default.region $AWS_REGION
                     aws eks update-kubeconfig --name $CLUSTER --region $AWS_REGION
                     '''
-                }
+                                                  }
             }
         }
 
@@ -58,7 +58,7 @@ pipeline {
                     docker build -t $DOCKER_IMAGE .
                     docker push $DOCKER_IMAGE
                     '''
-                }
+                                                  }
             }
         }
 
@@ -72,7 +72,16 @@ pipeline {
                     kubectl apply -f deployment.yaml
                     kubectl apply -f service.yaml
                     '''
-                }
+                                                  }
+            }
+        }
+        stage('Deploy Monitoring Tool') {
+            steps {
+                sh'''
+                chmod +x monitoring.sh
+                ./monitoring.sh
+                kubectl get svc -n monitoring
+                '''
             }
         }
     }
