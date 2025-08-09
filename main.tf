@@ -3,7 +3,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 6.0.0"
+      version = "~> 5.0"
     }
   }
 }
@@ -31,7 +31,7 @@ module "vpc" {
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 20.0"
+  version = "20.8.4"
   cluster_name    = var.cluster_name
   cluster_version = "1.29"
   subnet_ids      = module.vpc.private_subnets
@@ -54,5 +54,6 @@ module "eks" {
   }
 
 }
+
 
 
