@@ -24,7 +24,7 @@ pipeline {
                     aws sts get-caller-identity
 
                     echo "==> Terraform Init"
-                    terraform init -upgrade
+                    terraform init -reconfigure
 
                     echo "==> Terraform Apply"
                     terraform apply -auto-approve
@@ -86,6 +86,7 @@ pipeline {
         }
     }
 }
+
 
 
 
