@@ -28,5 +28,5 @@ variable "ec2_ami" {
 
 variable "eks_node_count" {
   type    = number
-  default = 1
+  default = 2
 }
