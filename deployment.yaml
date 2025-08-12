@@ -5,7 +5,7 @@ metadata:
   labels:
     app: mini2-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: mini2-app
@@ -13,9 +13,9 @@ spec:
     metadata:
       labels:
         app: mini2-app
-      spec:
-        containers:
-          - name: mini2-app--container
-            image: IMAGE_PLACEHOLDER
-            ports:
-              - containerPort: 80
+    spec:
+      containers:
+        - name: mini2-app--container
+          image: IMAGE_PLACEHOLDER
+          ports:
+          - containerPort: 80
