@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: mini2-app--container
-          image: IMAGE_PLACEHOLDER
+          image: ashok2102/mini-2:latest
           ports:
           - containerPort: 80
