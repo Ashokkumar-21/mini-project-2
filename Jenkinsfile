@@ -39,7 +39,7 @@ pipeline {
                                                   usernameVariable: 'AWS_ACCESS_KEY_ID',
                                                   passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                     sh '''
-            aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME
+            aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER
             kubectl set image -f deployment.yaml mini2app=$DOCKERHUB_IMAGE --record || true
             kubectl apply -f deployment.yaml
             kubectl apply -f service.yaml
