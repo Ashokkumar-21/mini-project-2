@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    environment {
+        AWS_REGION = 'ap-south-1'
+        DOCKER_IMAGE = 'ashok2102/mini-2:latest'
+        CLUSTER = 'mini2-cluster'
+    }
+  stages {
+    stage('Login AWS Credentials') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'AWS_CREDENTIALS',
+                                          usernameVariable: 'AWS_ACCESS_KEY_ID',
+                                          passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+          sh '''
+              echo ">> Destroying Terraform-managed resources"
+              terraform init -reconfigure
+              terraform destroy -auto-approve
+              '''
+                                          }
+      }
+    }
+  }
+}
