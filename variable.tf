@@ -18,7 +18,7 @@ variable "cluster_name" {
 
 variable "eks_instance_type" {
   type    = string
-  default = "t2.micro"
+  default = "t3.medium"
 }
 
 variable "ec2_ami" {
