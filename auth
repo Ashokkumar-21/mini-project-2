@@ -1,8 +1,0 @@
-resource "null_resource" "aws_auth_patch" {
-  provisioner "local-exec" {
-  interpreter = ["bash", "-c"]
-  command = <<EOT
-echo "Hello from local-exec"
-EOT
-}
-}
